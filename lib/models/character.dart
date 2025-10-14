@@ -4,6 +4,15 @@ class Character {
   final int strenght;
   final int magic;
   final int speed;
+  int totalReviews = 0;
+  int totalRatings = 0;
+
+  double get average => (totalReviews == 0) ? 0 : totalRatings / totalReviews;
+
+  void addRating(int stars) {
+    totalReviews++;
+    totalRatings += stars;
+  }
 
   Character({
     required this.name,
