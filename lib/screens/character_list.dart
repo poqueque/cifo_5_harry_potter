@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:harry_potter/providers/hogwarts_data.dart';
 import 'package:harry_potter/screens/character_detail.dart';
+import 'package:harry_potter/services/preferences.dart';
 import 'package:provider/provider.dart';
 
-class CharacterList extends StatelessWidget {
+class CharacterList extends StatefulWidget {
   const CharacterList({super.key});
 
+  @override
+  State<CharacterList> createState() => _CharacterListState();
+}
+
+class _CharacterListState extends State<CharacterList> {
   @override
   Widget build(BuildContext context) {
     return Consumer<HogwartsData>(
       builder: (context, hogwartsData, child) {
         return Scaffold(
-          appBar: AppBar(title: Text("Benvinguts a Hogwarts")),
+          appBar: AppBar(
+            title: Text("Benvinguts a Hogwarts"),
+
+            actions: [
+              Switch(
+                value: Preferences.instance.hasToShowSubtitles(),
+                onChanged: (value) {
+                  Preferences.instance.setShowSubtitles(value);
+                  setState(() {});
+                },
+              ),
+            ],
+          ),
           body: ListView(
             children: [
               for (var character in hogwartsData.characters)
@@ -23,7 +41,10 @@ class CharacterList extends StatelessWidget {
                       child: Image.network(character.imageUrl),
                     ),
                     title: Text(character.name),
-                    subtitle: Text("${character.totalReviews} valoracions"),
+
+                    subtitle: Preferences.instance.hasToShowSubtitles()
+                        ? Text("${character.totalReviews} valoracions")
+                        : null,
                     trailing: InkWell(
                       onTap: () {
                         hogwartsData.toggleFavorite(character.id);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:harry_potter/providers/hogwarts_data.dart';
-import 'package:harry_potter/screens/character_list.dart';
+import 'package:harry_potter/screens/splash.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MyApp());
 }
 
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => HogwartsData(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: GoogleFonts.montserrat().fontFamily,
           appBarTheme: AppBarTheme(
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
             centerTitle: true,
           ),
         ),
-        home: CharacterList(),
+        home: Splash(),
       ),
     );
   }
