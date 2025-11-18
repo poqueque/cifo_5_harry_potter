@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harry_potter/providers/hogwarts_data.dart';
-import 'package:harry_potter/screens/character_list.dart';
+import 'package:harry_potter/screens/responsive_page.dart';
 import 'package:harry_potter/services/database.dart';
 import 'package:harry_potter/services/preferences.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +59,7 @@ class _SplashState extends State<Splash> {
     if (!mounted) return;
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => CharacterList()),
+      MaterialPageRoute(builder: (context) => ResponsivePage()),
     );
   }
 }

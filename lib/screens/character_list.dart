@@ -5,7 +5,13 @@ import 'package:harry_potter/services/preferences.dart';
 import 'package:provider/provider.dart';
 
 class CharacterList extends StatefulWidget {
-  const CharacterList({super.key});
+  const CharacterList({
+    super.key,
+    this.hasToShowAppBar = true,
+    this.onCharacterTap,
+  });
+  final bool hasToShowAppBar;
+  final Function(int)? onCharacterTap;
 
   @override
   State<CharacterList> createState() => _CharacterListState();
@@ -17,19 +23,20 @@ class _CharacterListState extends State<CharacterList> {
     return Consumer<HogwartsData>(
       builder: (context, hogwartsData, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text("Benvinguts a Hogwarts"),
-
-            actions: [
-              Switch(
-                value: Preferences.instance.hasToShowSubtitles(),
-                onChanged: (value) {
-                  Preferences.instance.setShowSubtitles(value);
-                  setState(() {});
-                },
-              ),
-            ],
-          ),
+          appBar: widget.hasToShowAppBar
+              ? AppBar(
+                  title: Text("Benvinguts a Hogwarts"),
+                  actions: [
+                    Switch(
+                      value: Preferences.instance.hasToShowSubtitles(),
+                      onChanged: (value) {
+                        Preferences.instance.setShowSubtitles(value);
+                        setState(() {});
+                      },
+                    ),
+                  ],
+                )
+              : null,
           body: ListView(
             children: [
               for (var character in hogwartsData.characters)
@@ -59,13 +66,17 @@ class _CharacterListState extends State<CharacterList> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              CharacterDetail(characterId: character.id),
-                        ),
-                      );
+                      if (widget.onCharacterTap == null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CharacterDetail(characterId: character.id),
+                          ),
+                        );
+                      } else {
+                        widget.onCharacterTap!(character.id);
+                      }
                     },
                   ),
                 ),

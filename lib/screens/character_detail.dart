@@ -5,9 +5,14 @@ import 'package:harry_potter/widgets/rating.dart';
 import 'package:provider/provider.dart';
 
 class CharacterDetail extends StatefulWidget {
-  const CharacterDetail({super.key, required this.characterId});
+  const CharacterDetail({
+    super.key,
+    required this.characterId,
+    this.hasToShowAppBar = true,
+  });
 
   final int characterId;
+  final bool hasToShowAppBar;
 
   @override
   State<CharacterDetail> createState() => _CharacterDetailState();
@@ -22,14 +27,18 @@ class _CharacterDetailState extends State<CharacterDetail> {
       builder: (context, hogwartsData, child) {
         Character character = hogwartsData.getCharacterById(widget.characterId);
         return Scaffold(
-          appBar: AppBar(title: Text("Detalls de ${character.name}")),
+          appBar: (widget.hasToShowAppBar)
+              ? AppBar(title: Text("Detalls de ${character.name}"))
+              : null,
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //Image
-              Hero(
-                tag: character.name,
-                child: Image.network(character.imageUrl),
+              Flexible(
+                child: Hero(
+                  tag: character.name,
+                  child: Image.network(character.imageUrl),
+                ),
               ),
               //Stars
               Row(
