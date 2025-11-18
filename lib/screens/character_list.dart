@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harry_potter/l10n/app_localizations.dart';
 import 'package:harry_potter/providers/hogwarts_data.dart';
 import 'package:harry_potter/screens/character_detail.dart';
 import 'package:harry_potter/services/preferences.dart';
@@ -18,14 +19,16 @@ class CharacterList extends StatefulWidget {
 }
 
 class _CharacterListState extends State<CharacterList> {
+  
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l = AppLocalizations.of(context)!;
     return Consumer<HogwartsData>(
       builder: (context, hogwartsData, child) {
         return Scaffold(
           appBar: widget.hasToShowAppBar
               ? AppBar(
-                  title: Text("Benvinguts a Hogwarts"),
+                  title: Text(l.welcome),
                   actions: [
                     Switch(
                       value: Preferences.instance.hasToShowSubtitles(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harry_potter/l10n/app_localizations.dart';
 import 'package:harry_potter/models/character.dart';
 import 'package:harry_potter/providers/hogwarts_data.dart';
 import 'package:harry_potter/widgets/rating.dart';
@@ -23,12 +24,13 @@ class _CharacterDetailState extends State<CharacterDetail> {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations l = AppLocalizations.of(context)!;
     return Consumer<HogwartsData>(
       builder: (context, hogwartsData, child) {
         Character character = hogwartsData.getCharacterById(widget.characterId);
         return Scaffold(
           appBar: (widget.hasToShowAppBar)
-              ? AppBar(title: Text("Detalls de ${character.name}"))
+              ? AppBar(title: Text(l.details(character.name)))
               : null,
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +47,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Rating(value: character.average),
-                  Text("${character.totalReviews} reviews"),
+                  Text(l.nReviews(character.totalReviews)),
                   InkWell(
                     onTap: () {
                       hogwartsData.toggleFavorite(character.id);
@@ -63,7 +65,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
               ),
               //Text
               Text(
-                "Harry Potter",
+                character.name,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               Rating(
@@ -81,21 +83,21 @@ class _CharacterDetailState extends State<CharacterDetail> {
                   Column(
                     children: [
                       Icon(Icons.fitness_center, size: 32),
-                      Text("Força"),
+                      Text(l.strenght),
                       Text("${character.strenght}"),
                     ],
                   ),
                   Column(
                     children: [
                       Icon(Icons.auto_fix_normal, size: 32),
-                      Text("Màgia"),
+                      Text(l.magic),
                       Text("${character.magic}"),
                     ],
                   ),
                   Column(
                     children: [
                       Icon(Icons.speed, size: 32),
-                      Text("Velocitat"),
+                      Text(l.speed),
                       Text("${character.speed}"),
                     ],
                   ),

@@ -1,0 +1,9 @@
+{
+    "@@locale": "es",
+    "welcome": "Bienvenidos a Hogwarts",
+    "strenght": "Fuerza",
+    "magic": "Magia",
+    "speed": "Velocidad",
+    "details": "Detalles de {character}",
+    "nReviews": "{count, plural, =0{sin reseñas} =1{1 reseña} other{{count} reseñas}}"
+}
